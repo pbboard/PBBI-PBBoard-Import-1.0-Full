@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin name="PBBI PBBoard Import V1">
+<version>1.0</version>
+<description><![CDATA[يتيح نظام PBBI PBBoard Import إمكانية استيراد ونقل البيانات من أنظمة المنتديات الأخرى؛ بما في ذلك الأعضاء، الأقسام، المواضيع، المشاركات، والرسائل الخاصة، والمرفقات، والمشرفون، والاستفتاءات بالإضافة إلى مجموعة متنوعة من البيانات الأخرى.<br /><a href="index.php?page=importer&amp;import=1&amp;main=1"><font color="blue"><b>البدء في استيراد البيانات</b></font></a>]]></description>
+<author>SULAIMAN DAWOOD</author>
+<url>pbboard.info</url>
+<installcode><![CDATA[
+]]></installcode>
+<uninstallcode><![CDATA[
+]]></uninstallcode>
+<admin_templates>
+<template name="import.tpl" type="new">
+<text><![CDATA[
+<br />
+<div class="address_bar">
+<a href="index.php?page=index&amp;left=1">
+{$lang['Control_Panel']}
+</a>
+&raquo;
+{$lang['import_system']}
+</div>
+<br />
+<form action="index.php?page=importer&amp;import=1&amp;data=1" method="post">
+<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="0" align="center">
+<tr align="center">
+<td class="main1" colspan="2">
+<b>{$lang['import_data']}</b>
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">{$lang['import_from']}</td>
+
+<td class="row1" valign="top">
+			<select name="importer" class="input" size="10" style="width: 70%;">
+				<optgroup label="{$lang['import_target']} PBBoard">
+<option value="PBBI:MyBb">MyBB 1.x</option>
+<option value="PBBI:PhpBb">phpBB 3.x</option>
+<option value="PBBI:vBulletin5">vBulletin 5.x ({$lang['Beta']})</option>
+<option value="PBBI:vBulletin4">vBulletin 4.x</option>
+<option value="PBBI:vBulletin3">vBulletin 3.x</option>
+<option value="PBBI:XenForo2">XenForo 2.x</option>
+</optgroup>
+</select>
+</td>
+</tr>
+<tr>
+<td class="main2" colspan="2"><input type="submit" value="{$lang['continue_']}" name="submit" /></td>
+</tr>
+</table>
+</form>
+<br />
+<br />
+]]></text>
+</template>
+<template name="import_config.tpl" type="new">
+<text><![CDATA[
+<br />
+<div class="address_bar">
+<a href="index.php?page=index&amp;left=1">
+{$lang['Control_Panel']}
+</a>
+&raquo;
+{$lang['import_data']}
+</div>
+
+<h1 class="p-title-value">
+Configure importer: {$Configuretitleimport}
+</h1>
+{if {$import_data} == 1}
+<div class="t_style_c" style="opacity: 1;width:60%;direction: ltr;">
+    <form action="index.php?page=importer&amp;import=1&amp;step-config=1" method="post" class="block" data-pbb-init="ajax-submit" data-replace=".js-importConfigForm">
+
+        <div class="block-body">
+            <dl class="row1">
+                <dt>
+                    <div class="row1">
+                        <label class="row1-label">Data to import</label>
+                        <dfn class="row1-hint"><br>
+                            <label class="iconic"><input type="checkbox" value="1" data-pbb-init="check-all" data-container=".data" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Select all</span></label>
+                        </dfn>
+                    </div>
+                </dt>
+                <dd>
+                    <ul class="data inputChoices" role="group" aria-labelledby="_pbbUid-1-1766603322">
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="users" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Users</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="forums" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Forums</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="moderators" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Moderators</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="threads" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Threads</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="posts" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Posts</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="privateMessages" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Private messages</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="polls" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Thread polls</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="votes" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Votes (Poll results)</span></label></li>
+<li class="inputChoices-choice"><label class="iconic"><input type="checkbox" name="steps[]" value="attachments" checked="checked"><i aria-hidden="true"></i><span class="iconic-label">Attachments</span></label></li>
+                    </ul>
+                    <div class="row1">Some steps may require other steps as a prerequisite.</div>
+                </dd>
+            </dl>
+
+           <dl class="row1 rput">
+    <dt>
+<div style="padding: 10px;border-right: 4px solid #0078d7;color: #0078d7;font-weight: bold !important;margin-top: 5px;font-size: 11px !important;line-height: 1.6;direction: rtl;text-align: right;">
+            <label>عدد سجلات المعالجة في كل دورة (Limit) </label>
+            <dfn class="row1-hint">الموصى به: 500 - 2000</dfn>
+        </div>
+    </dt>
+    <dd>
+      <div style="padding: 10px;border-right: 4px solid #0078d7;color: #0078d7;font-weight: bold !important;margin-top: 5px;font-size: 11px !important;line-height: 1.6;direction: rtl;text-align: right;">
+        <input type="number" class="input" name="import_limit" required="required" value="1000" min="10" max="5000" dir="ltr">
+        </div>
+        <div class="row1-labelWrapper" style="padding: 10px;/* background: #f8f9fa; */border-right: 4px solid #0078d7;color: #0078d7;margin-top: 5px;font-size: 12px !important;line-height: 1.6;direction: rtl;text-align: right;">
+            تحكم في سرعة التحويل؛ الأرقام الكبيرة (2000) تسرع العملية جداً للسيرفرات القوية والمحلية، بينما الأرقام الصغيرة (100) تضمن الاستقرار في الاستضافات الضعيفة.
+        </div>
+    </dd>
+</dl>
+        </div> <dl class="row1 formSubmitRow">
+            <dt></dt>
+            <dd>
+                <div class="formSubmitRow-main">
+                    <div class="formSubmitRow-bar"></div>
+                    <div class="formSubmitRow-controls">
+                        <button type="submit" class="button--primary button"><span class="button-text"><b>{$lang['continue_']}</b></span></button>
+                    </div>
+                </div>
+            </dd>
+        </dl>
+
+        <input type="hidden" name="config" value="...">
+        <input type="hidden" name="importer" value="{$Configuretitleimport}">
+
+    </form>
+</div> ```
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const selectAllCheckbox = document.querySelector('[data-pbb-init="check-all"]');
+
+    if (selectAllCheckbox) {
+        const containerSelector = selectAllCheckbox.getAttribute('data-container');
+        const container = document.querySelector(containerSelector);
+
+        if (container) {
+            const childCheckboxes = container.querySelectorAll('input[type="checkbox"]');
+
+            selectAllCheckbox.addEventListener('change', function () {
+                childCheckboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+            childCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const allChecked = Array.from(childCheckboxes).every(c => c.checked);
+                    selectAllCheckbox.checked = allChecked;
+                });
+            });
+        }
+    }
+});
+</script>
+{else}
+<form action="index.php?page=importer&amp;import=1&amp;config=1" method="post">
+<div align="center">
+<table cellpadding="3" cellspacing="1" width="80%" class="t_style_b" border="0" dir="ltr">
+<tr align="center">
+<td class="main1" colspan="2">
+<b>{$lang['import_data']} - (Source database configuration)</b>
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">MySQL server:</td>
+<td class="row1" valign="top">
+	<input type="text" class="input" name="host" value="localhost" placeholder="hostname" required="required" dir="ltr" style="width: 90%;" />
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">MySQL port:</td>
+<td class="row1" valign="top">
+	<input type="text" class="input" name="port" value="3306" placeholder="Default: 3306" dir="ltr" style="width: 90%;" />
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">MySQL username:</td>
+<td class="row1" valign="top">
+	<input type="text" class="input" name="username" value="root" placeholder="database username" required="required" dir="ltr" style="width: 90%;" />
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">MySQL password:</td>
+<td class="row1" valign="top">
+<input type="text" class="input" name="password" autocomplete="off" placeholder="database password" dir="ltr" style="width: 90%;" />
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">MySQL database name:</td>
+<td class="row1" valign="top">
+	<input type="text" class="input" name="dbname" placeholder="database name" required="required" dir="ltr" style="width: 90%;" />
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">MySQL table prefix:</td>
+<td class="row1" valign="top">
+	<input type="text" class="input" name="tablePrefix" value="{$prefix}" placeholder="database table prefix" dir="ltr" style="width: 90%;" />
+</td>
+</tr>
+<tr>
+<td class="row1" valign="top" width="20%" align="right">Force character set:</td>
+<td class="row1" valign="top">
+	<input type="text" class="input" name="charset" value="" placeholder="اتركه فارغاً للاكتشاف التلقائي" dir="ltr" style="width: 90%;" />
+<br />
+	<div style="padding: 10px; background: #f8f9fa; border-left: 4px solid #3498db; margin-top: 5px; font-size: 10px !important; line-height: 1.6;direction: rtl;text-align: left;">
+لضمان سلامة اللغة العربية، اترك هذا الحقل فارغاً <br />(سيقوم المحول بالتعرف على الترميز تلقائياً ومعالجة الرموز الغريبة).
+</div>
+</td>
+</tr>
+<tr>
+    <td class="row1" valign="top" width="25%" align="right">
+        <strong>{$uploads_path_title}:</strong>
+    </td>
+    <td class="row1" valign="top">
+        <input type="text" class="input" name="uploads_path" placeholder="مثال: {$current_path}" required="required" dir="ltr" style="width: 90%; margin-bottom: 5px;" />
+        <br />
+        <div style="padding: 10px; background: #f8f9fa; border-left: 4px solid #3498db; margin-top: 5px; font-size: 10px !important; line-height: 1.6;direction: rtl;text-align: left;">
+            <b>💡 مساعدة</b><br />
+            المسار هو مكان مجلد المنتدى على السيرفر وليس الرابط (URL)<br />
+            مسار مجلد منتدى PBBoard الحالي هو: <code style="color: #e83e8c;">{$current_path}</code><br />
+            <span style="color: #2c3e50;">تنبيه: {$path_helper_text}</span>
+        </div>
+    </td>
+</tr>
+<tr>
+<td class="main2" colspan="2"><input type="submit" value="{$lang['continue_']}" name="submit" /></td>
+</tr>
+</table>
+</div>
+</form>
+<br />
+<br />
+{/if}
+]]></text>
+</template>
+<template name="import_step.tpl" type="new">
+<text><![CDATA[
+<div class="address_bar">{$lang['import_system']} &raquo; {$lang['processing']}</div>
+
+<div class="t_style_b" style="padding: 20px; text-align: center;">
+    <h3 id="import-status">جاري تحضير عملية الاستيراد...</h3>
+
+    <div style="width: 100%; background: #eee; border-radius: 5px; margin: 20px 0; height: 25px; position: relative; overflow: hidden;">
+        <div id="progress-bar" style="width: 0%; background: #2ecc71; height: 100%; transition: width 0.3s;"></div>
+    </div>
+
+<div id="import-details" style="font-size: 14px; color: #333; font-weight: bold; margin-top: 10px;">
+    جاري استيراد: <span id="current-step" style="color: #e67e22;">---</span> |
+    تم نقل <span id="processed-count" style="color: #27ae60;">0</span> سجل بنجاح
+</div>
+</div>
+
+<script>
+// نستخدم jQuery لضمان التوافق مع بيئة PBBoard
+jQuery(document).ready(function($) {
+    const importSteps = {$js_steps};
+    let currentStepIndex = 0;
+    let offset = 0;
+    const limit = {$selected_limit};
+
+    function processNext() {
+        // 1. التحقق من انتهاء جميع المراحل المختارة
+        if (currentStepIndex >= importSteps.length) {
+            // إخفاء تفاصيل العدادات الصغيرة لتركيز الانتباه على رسالة النجاح
+            $('#import-details').fadeOut();
+
+            // صياغة رسالة النجاح النهائية مع التنويه المطلوب
+let finalMsg = `
+                <div style="margin-top: 20px; padding: 25px; border: 1px solid #2ecc71; background: #f0fff4; border-radius: 8px; text-align: right; direction: rtl; font-family: tahoma;">
+                    <h2 style="color: #27ae60; margin-bottom: 10px; text-align: center;">✔ تم اكتمال الاستيراد بنجاح!</h2>
+                    <hr style="border: 0; border-top: 1px solid #d4edda; margin: 15px 0;">
+
+                    <div style="color: #155724; font-size: 14px; line-height: 1.8;">
+                        <strong style="color: #c0392b; font-size: 16px;">الخطوات النهائية المطلوبة:</strong>
+
+                        <ul style="margin-top: 10px; list-style-type: none; padding-right: 0;">
+                            <li style="margin-bottom: 15px;">
+                                <b>1. يجب تحديث جميع العدادات:</b><br>
+                                لضمان ظهور البيانات بشكل صحيح، يجب التوجه إلى:
+                                <b style="padding: 3px 8px; background: #fff; border: 1px dashed #2ecc71; font-weight: bold;">
+                                    الصيانة &raquo; تحديث العدادات
+                                </b>
+                            </li>
+
+                            {if {$Configuretitleimport} == 'XenForo2'}
+                            <li style="margin-bottom: 10px; padding: 12px; background: #fff5f5; border: 1px solid #feb2b2; border-radius: 6px; color: #c53030;">
+                                <strong>⚠️ تنبيه أمني (XenForo 2):</strong><br>
+                                بسبب اختلاف نظام تشفير كلمات المرور، لن يتمكن الأعضاء من الدخول بكلماتهم القديمة.
+                                <b>يجب على الجميع (بما فيهم المدير) استخدام رابط "فقدت كلمة المرور" لتعيين كلمة سر جديدة.</b>
+                            </li>
+                            {/if}
+                        </ul>
+                    </div>
+
+                    <div style="margin-top: 20px; text-align: center;">
+                        <a href="index.php" style="background: #2ecc71; color: white; padding: 10px 30px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">العودة للوحة الإدارة</a>
+                    </div>
+                </div>
+            `;
+
+            $('#import-status').html(finalMsg);
+            $('#current-step').text('---');
+            return;
+        }
+
+        let currentStep = importSteps[currentStepIndex];
+        $('#current-step').text(currentStep);
+        $('#import-status').html('جاري معالجة قسم: <span style="color:#2980b9;">' + currentStep + '</span>');
+
+        // 2. تنفيذ طلب AJAX عبر jQuery
+        $.ajax({
+            url: 'index.php?page=importer&import=1&ajax=1',
+            type: 'POST',
+            data: {
+                action: 'process',
+                step: currentStep,
+                offset: offset,
+                limit: limit
+            },
+            dataType: 'json',
+            success: function(data) {
+                if (data.status === 'continue') {
+                    // لم ننتهي من هذا القسم بعد (يوجد سجلات إضافية)
+                    offset += limit;
+                    updateUI(data.percent, data.total_processed);
+                    processNext();
+                }
+                else if (data.status === 'step_complete') {
+                    // انتهينا من هذا القسم، ننتقل للقسم التالي في المصفوفة
+                    offset = 0;
+                    currentStepIndex++;
+                    updateUI(100, data.total_processed);
+
+                    // تأخير بسيط (نصف ثانية) لراحة العين قبل الانتقال للخطوة التالية
+                    setTimeout(processNext, 100);
+                }
+                else if (data.status === 'error') {
+                    $('#import-status').html('<b style="color:red;">خطأ: ' + data.message + '</b>');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#import-status').html('<b style="color:red;">حدث خطأ في الاتصال بالسيرفر!</b>');
+                console.error("AJAX Error:", status, error);
+            }
+        });
+    }
+
+    function updateUI(percent, count) {
+        $('#progress-bar').css('width', percent + '%');
+        $('#processed-count').text(count);
+    }
+
+    // بدء المعالجة الفعلية
+    processNext();
+});
+</script>
+]]></text>
+</template>
+</admin_templates>
+<hooks>
+<hook main_place="menu_cp" place="menu_cp"><![CDATA[
+<li><span class="headerbar"><a onClick="return false;" href="#"><span class="fa fa-bars" style="float:<?php echo $PowerBB->_CONF['template']['align'];?>"></span>
+<?php echo $PowerBB->_CONF['template']['_CONF']['lang']['import_system'];?>
+<img alt="" style="float:<?php echo $PowerBB->_CONF['template']['desalign'];?>" src="<?php echo $PowerBB->_CONF['template']['admincpdir_cssprefs'];?>/collapse_b.gif" class="hide_m" /></a></span>
+<ul>
+<li><i class="fa fa-dot-circle-o" aria-hidden="true" style="float:<?php echo $PowerBB->_CONF['template']['align'];?>"></i><a href="index.php?page=importer&amp;import=1&amp;main=1">
+<?php echo $PowerBB->_CONF['template']['_CONF']['lang']['import_data'];?>
+</a></li>
+</ul>
+</li>
+]]> </hook>
+</hooks>
+<phrases>
+  <phrase varname="import_system" fieldname="admincp">نظام الاستيراد</phrase>
+  <phrase varname="import_data" fieldname="admincp">استيراد البيانات</phrase>
+  <phrase varname="import_target" fieldname="admincp">هدف الاستيراد</phrase>
+  <phrase varname="import_from" fieldname="admincp">استيراد البيانات من :</phrase>
+  <phrase varname="continue_" fieldname="admincp">…متابعة</phrase>
+  <phrase varname="Beta" fieldname="admincp">تجريبي</phrase>
+  <phrase varname="processing" fieldname="admincp">المعالجة</phrase>
+
+</phrases>
+</plugin>
