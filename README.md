@@ -32,15 +32,14 @@ An advanced data migration system designed for PBBoard, enabling seamless data i
 ### A. File Upload
 1. Upload the contents of the `Upload` folder to your PBBoard root directory on the server.
 
-### B. Plugin Import
+### B. Addon Import
 1. Log in to your **Admin Control Panel (ACP)**.
-2. Navigate to: `Plugins` -> `Import New Plugin`.
-3. Upload the `PBBI-PBBoard-Import-1.0.xml` file.
-
+2. Navigate to: `Addons` -> `Import Addons`.
+3. Import the `PBBI-PBBoard-Import-1.0.xml` file.
 ---
 
 ## 🚀 Migration Steps (Usage)
-1. In the ACP, navigate to the new **"Import System"** section.
+1. In the Admin Control Panel (ACP), navigate to the new **"Import System | نظام الاستيراد >> Import Data | استيراد البيانات"** section.
 2. Select the **Source Forum** type.
 3. Enter the source forum database credentials (**Host, DB Name, User, Password**).
 4. Provide the **Server Absolute Path** for the source forum directory (critical for migrating attachments and avatars).
@@ -54,10 +53,9 @@ An advanced data migration system designed for PBBoard, enabling seamless data i
 
 ## 🧹 Post-Import Optimization
 To ensure data integrity after migration, perform the following:
-* Go to: `ACP -> Maintenance -> Update Counters`.
-* Execute: **Update all forums at once**.
-* Execute: **Auto-update permissions** for all groups and forums.
-
+* Go to: `dmin Control Panel -> Maintenance -> Update Counters`.
+* Execute: **Update all cache forums**.
+* Execute: **Rebuild the permissions of groups for all sections & forums**.
 ---
 
 ## ⚠️ Important Notes
