@@ -53,7 +53,7 @@ An advanced data migration system designed for PBBoard, enabling seamless data i
 
 ## 🧹 Post-Import Optimization
 To ensure data integrity after migration, perform the following:
-* Go to: `dmin Control Panel -> Maintenance -> Update Counters`.
+* Go to: `Admin Control Panel -> Maintenance -> Update Counters`.
 * Execute: **Update all cache forums**.
 * Execute: **Rebuild the permissions of groups for all sections & forums**.
 ---
