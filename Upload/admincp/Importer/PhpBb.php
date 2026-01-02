@@ -1,4 +1,15 @@
 <?php
+/**
+ * PBBI - PBBoard Import System
+ *
+ * @author    PBBoard Team
+ * @license   GPL-3.0-or-later
+ * @link      https://github.com/pbboard/PBBI-PBBoard-Import-1.0-Full
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation.
+ */
 (!defined('IN_PowerBB')) ? die() : '';
 
 class PhpBb_Importer {
