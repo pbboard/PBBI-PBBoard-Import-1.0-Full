@@ -12,7 +12,7 @@
  */
 (!defined('IN_PowerBB')) ? die() : '';
 
-class vBulletin5_Importer {
+class vBulletin4_Importer {
     private $db_source;
     private $db_pbb;
     private $pbb_prefix;
@@ -30,9 +30,9 @@ class vBulletin5_Importer {
             $this->db_pbb->set_charset("utf8mb4");
         }
 
-        // 2. الاتصال بقاعدة بيانات vBulletin 5 (المصدر)
+        // 2. الاتصال بقاعدة بيانات vBulletin 4 (المصدر)
         $this->db_source = @new mysqli($_SESSION['import_host'], $_SESSION['import_username'], $_SESSION['import_password'], $_SESSION['import_dbname'], $_SESSION['import_port']);
-        // vB5 غالباً latin1 ولكننا سنجرب utf8mb4 للتوافق، وإذا كانت البيانات مشفرة سنتعامل معها في smartClean
+        // vB4 غالباً latin1 ولكننا سنجرب utf8mb4 للتوافق، وإذا كانت البيانات مشفرة سنتعامل معها في smartClean
 $forced_charset = isset($_SESSION['import_charset']) ? trim($_SESSION['import_charset']) : '';
 if (!empty($forced_charset)) {
     $this->db_source->set_charset($forced_charset);
@@ -371,7 +371,7 @@ case 'posts':
     $message = $this->smartClean($row['pagetext']);
     $writer  = $this->smartClean($row['username']);
     $thread_title = $this->smartClean($row['thread_title']);
-
+    $section_id = (int)$row['forumid'];
     $visible = ($row['visible'] == 1) ? 0 : 1;
     $attach_reply = (isset($row['attach']) && $row['attach'] > 0) ? 1 : 0;
 
@@ -383,7 +383,8 @@ case 'posts':
     $this->db_pbb->query("INSERT IGNORE INTO {$this->pbb_prefix}reply SET
         id              = '{$row['postid']}',
         subject_id      = '{$row['threadid']}',
-        title           = 'RE: ".$this->escape($thread_title)."',
+        title           = '".$this->escape($thread_title)."',
+        section         = '{$section_id}',
         text            = '".$this->escape($message)."',
         writer          = '".$this->escape($writer)."',
         attach_reply    = '{$attach_reply}',
@@ -555,12 +556,17 @@ case 'threads':
 
 case 'posts':
     $prefix = $_SESSION['import_prefix'];
-    $sql = "SELECT p.*, t.title as thread_title
-            FROM {$prefix}post p
-            INNER JOIN {$prefix}thread t ON p.threadid = t.threadid
-            WHERE p.postid != t.firstpostid
-            ORDER BY p.postid ASC
-            LIMIT $offset, $limit";
+    $sql = "
+        SELECT
+            p.*,
+            t.title AS thread_title,
+            t.forumid
+        FROM {$prefix}post p
+        INNER JOIN {$prefix}thread t ON p.threadid = t.threadid
+        WHERE p.postid != t.firstpostid
+        ORDER BY p.postid ASC
+        LIMIT $offset, $limit
+    ";
     return $this->db_source->query($sql)->fetch_all(MYSQLI_ASSOC);
 
 	case 'privateMessages':

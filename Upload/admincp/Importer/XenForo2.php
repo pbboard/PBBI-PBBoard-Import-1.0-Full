@@ -356,6 +356,7 @@ case 'users':
 			    $this->db_pbb->query("INSERT INTO {$this->pbb_prefix}reply SET
 			        id              = '{$row['post_id']}',
 			        subject_id      = '{$row['thread_id']}',
+					section         = '{$row['node_id']}',
 			        title           = 'RE: ".$this->escape($row['thread_title'])."',
 			        text            = '".$this->escape($message)."',
 			        writer          = '".$this->escape($row['username'])."',

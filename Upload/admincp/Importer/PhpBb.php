@@ -382,9 +382,6 @@ case 'threads':
     break;
 
 case 'posts':
-    // في phpBB (النسخ الحديثة): 1 هو المرئي، 0 هو المنتظر للمراجعة
-    // في PBBoard: 0 هو المرئي، 1 هو المنتظر للمراجعة
-    // سنقوم بعكس القيمة لكي تتوافق مع نظام PBBoard
     $visible_status = (isset($row['visible']) && $row['visible'] == 1) ? 0 : 1;
 
     $attach_reply = ($row['has_attach'] > 0) ? 1 : 0;

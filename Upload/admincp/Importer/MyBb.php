@@ -310,11 +310,19 @@ case 'users':
                 $action_by = ($row['edituid'] > 0) ? $this->escape($row['username']) : '';
 
                 $this->db_pbb->query("INSERT INTO {$this->pbb_prefix}reply SET
-                    id='{$row['pid']}', subject_id='{$row['tid']}', title='".$this->escape($row['subject'])."',
-                    text='".$this->escape($row['message'])."', writer='".$this->escape($row['username'])."',
-                    attach_reply='{$attach_reply}', review_reply='{$visible}', icon='look/images/icons/i1.gif',
-                    actiondate='{$row['edittime']}', reason_edit='".$this->escape($row['editreason'])."',
-                    action_by='".$action_by."', write_time='{$row['dateline']}'");
+                    id='{$row['pid']}',
+                    subject_id='{$row['tid']}',
+                    title='".$this->escape($row['subject'])."',
+                    text='".$this->escape($row['message'])."',
+                    writer='".$this->escape($row['username'])."',
+                    attach_reply='{$attach_reply}',
+                    review_reply='{$visible}',
+                    section       = '{$row['fid']}',
+                    icon='look/images/icons/i1.gif',
+                    actiondate='{$row['edittime']}',
+                    reason_edit='".$this->escape($row['editreason'])."',
+                    action_by='".$action_by."',
+                    write_time='{$row['dateline']}'");
                 break;
 
             case 'privateMessages':
