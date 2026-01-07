@@ -153,10 +153,6 @@ function _configMain()
 			$PowerBB->functions->error(" Please enter a <b>database name</b></b>");
 		}
 
-        // --- الجزء المضاف لاستقبال الـ Limit الجديد ---
-        // نضع قيمة 1000 كافتراضي إذا كان الحقل فارغاً
-        $_SESSION['import_limit'] = (!empty($PowerBB->_POST['import_limit'])) ? (int)$PowerBB->_POST['import_limit'] : 1000;
-        // ---------------------------------------------
 
         $_SESSION['import_host'] = $PowerBB->_POST['host'];
         $_SESSION['import_password'] = $PowerBB->_POST['password'];
@@ -219,6 +215,10 @@ function _configMain()
 	    if (empty($PowerBB->_POST['steps'])) {
 	        $PowerBB->functions->error("يرجى اختيار قسم واحد على الأقل للاستيراد");
 	    }
+        // --- الجزء المضاف لاستقبال الـ Limit الجديد ---
+        // نضع قيمة 1000 كافتراضي إذا كان الحقل فارغاً
+        $_SESSION['import_limit'] = (!empty($PowerBB->_POST['import_limit'])) ? (int)$PowerBB->_POST['import_limit'] : 1000;
+        // ---------------------------------------------
 
 	    // الترتيب الصحيح للعمليات
 	    $logic_order = ['users', 'forums', 'moderators', 'threads', 'posts', 'privateMessages', 'polls', 'votes', 'attachments'];
